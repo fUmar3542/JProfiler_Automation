@@ -65,9 +65,9 @@ def check_threads(p_x, p_y):
                 if th not in threads:
                     threads.append(th)
                     lines.append(line)
-                    print("------------------------------------------------------------------------------")
-                    print(line)
-                    print(th)
+                    # print("------------------------------------------------------------------------------")
+                    # print(line)
+                    # print(th)
                     check = write_data(threads[-1] + (lines[-1].split("~")))
                     if not check:
                         with open('errors.txt', 'a') as file:
@@ -109,23 +109,37 @@ def click_read_aloud():
 
         # Get the current cursor position
         x, y = 700, 180
+        pyautogui.click(x,y)
+        index = 1
 
-        for val in range(1, 100):
+        pyautogui.hotkey('ctrl', 'c')
+        z = pyperclip.paste()
+        pyperclip.copy('')
+
+        while z:
             try:
                 pyautogui.click(x,y)
-                # time.sleep(1)
                 # Get the current cursor position
                 x, y = pyautogui.position()
-                if val % 19 == 0:
-                    pyautogui.click(x,y)
+                if index % 19 == 0:
                     pyautogui.scroll(-750)
+                    time.sleep(1)
                     x, y = 700, 180
+                    pyautogui.click(x,y)
+                    pyautogui.hotkey('ctrl', 'c')
+                    t = pyperclip.paste()
+                    pyperclip.copy('')
+                    if t == z:
+                        break
+                    else:
+                        z = t
                 else:
                     check_threads(x, y)
                     y += 17
-                    # time.sleep(0.3)
             except:
                 pass
+            finally:
+                index = index + 1
     except Exception as ex:
         with open('errors.txt', 'a') as file:
             file.write(str(ex))
