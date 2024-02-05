@@ -37,7 +37,6 @@ def write_data(data):
 
 def check_threads(p_x, p_y):
     try:
-        pyautogui.hotkey('ctrl', 'a')
         pyautogui.hotkey('ctrl', 'c')
         line = pyperclip.paste()
         pyperclip.copy('')
@@ -68,7 +67,7 @@ def check_threads(p_x, p_y):
                     # print("------------------------------------------------------------------------------")
                     # print(line)
                     # print(th)
-                    check = write_data(threads[-1] + (lines[-1].split("~")))
+                    check = write_data(th + (line.split("~")))
                     if not check:
                         with open('errors.txt', 'a') as file:
                             file.write("There is some error occurred during writing to output file")
